@@ -121,6 +121,12 @@ PRODUCT_PACKAGES += \
     libhwbinder \
     libhwbinder.vendor
 
+# Health
+PRODUCT_PACKAGES += \
+    android.hardware.health@2.0 \
+    android.hardware.health@2.0-impl-qti \
+    android.hardware.health@2.0-service
+
 # Init scripts
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/init.qcom.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.qcom.rc \
