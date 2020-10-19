@@ -119,6 +119,26 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.full.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.full.xml \
     frameworks/native/data/etc/android.hardware.camera.raw.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.raw.xml
 
+# Display
+PRODUCT_PACKAGES += \
+    android.hardware.configstore@1.1 \
+    android.hardware.configstore@1.1-impl-qti \
+    gralloc.atoll \
+    hwcomposer.atoll \
+    libdisplayconfig \
+    libqdMetaData \
+    libtinyxml \
+    memtrack.atoll
+
+PRODUCT_PACKAGES += \
+    android.hardware.graphics.composer@2.3-service \
+    android.hardware.graphics.mapper@2.0-impl-qti-display \
+    android.hardware.memtrack@1.0-impl \
+    android.hardware.memtrack@1.0-service \
+    vendor.qti.hardware.display.allocator-service \
+    vendor.qti.hardware.display.allocator@1.0 \
+    vendor.qti.hardware.display.mapper@2.0.vendor
+
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0 \
