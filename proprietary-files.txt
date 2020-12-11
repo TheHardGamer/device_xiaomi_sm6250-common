@@ -248,7 +248,6 @@ vendor/bin/ims_rtp_daemon
 vendor/bin/imsdatadaemon
 vendor/bin/imsqmidaemon
 vendor/bin/imsrcsd
-vendor/bin/ipacm-diag
 vendor/bin/irsc_util
 vendor/bin/loc_launcher
 vendor/bin/lowi-server
@@ -380,7 +379,6 @@ vendor/etc/init/init.batterysecret.rc
 vendor/etc/init/init.qti.fm.rc
 vendor/etc/init/init.time_daemon.rc
 vendor/etc/init/ipa_fws.rc
-vendor/etc/init/ipacm-diag.rc
 vendor/etc/init/netmgrd.rc
 vendor/etc/init/port-bridge.rc
 vendor/etc/init/qcrild.rc
