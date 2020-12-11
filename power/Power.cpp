@@ -20,9 +20,8 @@
 
 #include "Power.h"
 
-constexpr static char const* inputDevicesDirectory = "/dev/input/";
-constexpr static int wakeupModeOn = 5;
-constexpr static int wakeupModeOff = 4;
+constexpr int kWakeupModeOff = 4;
+constexpr int kWakeupModeOn = 5;
 
 namespace android {
 namespace hardware {
@@ -39,44 +38,35 @@ Return<void> Power::powerHint(PowerHint_1_0, int32_t) {
     return Void();
 }
 
-bool isSupportedInputName(char* name) {
-    return strcmp(name, "fts_ts") == 0
-            || strcmp(name, "NVTCapacitiveTouchScreen") == 0;
-}
+int open_ts_input() {
+    int fd = -1;
+    DIR *dir = opendir("/dev/input");
 
-int openInputFd() {
-    DIR *dir = opendir(inputDevicesDirectory);
-    if (dir == NULL) {
-        return -1;
+    if (dir != NULL) {
+        struct dirent *ent;
+
+        while ((ent = readdir(dir)) != NULL) {
+            if (ent->d_type == DT_CHR) {
+                char absolute_path[PATH_MAX] = {0};
+                char name[80] = {0};
+
+                strcpy(absolute_path, "/dev/input/");
+                strcat(absolute_path, ent->d_name);
+
+                fd = open(absolute_path, O_RDWR);
+                if (ioctl(fd, EVIOCGNAME(sizeof(name) - 1), &name) > 0) {
+                    if (strcmp(name, "fts_ts") == 0 ||
+                            strcmp(name, "NVTCapacitiveTouchScreen") == 0)
+                        break;
+                }
+
+                close(fd);
+                fd = -1;
+            }
+        }
+
+        closedir(dir);
     }
-
-    struct dirent *ent;
-    int fd;
-    int rc;
-
-    while ((ent = readdir(dir)) != NULL) {
-        if (ent->d_type != DT_CHR)
-            continue;
-
-        char absolute_path[PATH_MAX] = {0};
-        char name[80] = {0};
-
-        strcpy(absolute_path, inputDevicesDirectory);
-        strcat(absolute_path, ent->d_name);
-
-        fd = open(absolute_path, O_RDWR);
-        if (fd < 0)
-            continue;
-
-        rc = ioctl(fd, EVIOCGNAME(sizeof(name) - 1), &name);
-        if (rc > 0 && isSupportedInputName(name))
-            break;
-
-        close(fd);
-        fd = -1;
-    }
-
-    closedir(dir);
 
     return fd;
 }
@@ -84,16 +74,15 @@ int openInputFd() {
 Return<void> Power::setFeature(Feature feature, bool activate) {
     switch (feature) {
         case Feature::POWER_FEATURE_DOUBLE_TAP_TO_WAKE: {
-            int fd = openInputFd();
-            if (fd < 0) {
-                ALOGW("No touchscreen input devices that support DT2W were found");
+	int fd = open_ts_input();
+            if (fd == -1) {
+                ALOGW("DT2W won't work because no supported touchscreen input devices were found");
                 return Void();
             }
-
             struct input_event ev;
             ev.type = EV_SYN;
             ev.code = SYN_CONFIG;
-            ev.value = activate ? wakeupModeOn : wakeupModeOff;
+            ev.value = activate ? kWakeupModeOn : kWakeupModeOff;
             write(fd, &ev, sizeof(ev));
             close(fd);
             } break;
@@ -104,14 +93,12 @@ Return<void> Power::setFeature(Feature feature, bool activate) {
 }
 
 Return<void> Power::getPlatformLowPowerStats(getPlatformLowPowerStats_cb _hidl_cb) {
-    ALOGI("getPlatformLowPowerStats not supported, do nothing");
     _hidl_cb({}, Status::SUCCESS);
     return Void();
 }
 
 // Methods from V1_1::IPower follow.
 Return<void> Power::getSubsystemLowPowerStats(getSubsystemLowPowerStats_cb _hidl_cb) {
-    ALOGI("getSubsystemLowPowerStats not supported, do nothing");
     _hidl_cb({}, Status::SUCCESS);
     return Void();
 }
