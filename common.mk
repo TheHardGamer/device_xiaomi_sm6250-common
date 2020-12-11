@@ -305,7 +305,8 @@ PRODUCT_PACKAGES += \
 # RIL
 PRODUCT_PACKAGES += \
     libjson \
-    librmnetctl
+    librmnetctl \
+    android.hardware.radio.config@1.2
 
 # Sensors
 PRODUCT_PACKAGES += \
