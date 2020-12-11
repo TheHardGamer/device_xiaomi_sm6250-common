@@ -128,6 +128,8 @@ PRODUCT_PACKAGES += \
     gralloc.atoll \
     libqdMetaData \
     libtinyxml \
+    libdisplayconfig \
+    libdisplayconfig.vendor \
     memtrack.atoll
 
 PRODUCT_PACKAGES += \
