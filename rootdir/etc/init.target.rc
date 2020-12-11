@@ -107,8 +107,6 @@ on post-fs-data
     mkdir /data/vendor/nfc 0770 nfc nfc
 # For cpusets initialize for Silver Only first and then Silver + Gold
 # Silver Only configuration cannot work with 0-7
-#Creat charger log
-    mkdir /data/vendor/charge_logger 0771 system system
 
 on boot
     chown system system /sys/kernel/hbtp/display_pwr
@@ -211,8 +209,6 @@ on charger
     start vendor.power_off_alarm
     chown system system /sys/class/leds/red/brightness
     chmod 0666 /sys/class/leds/red/brightness
-    mkdir /data/vendor/charge_logger 0771 system system
-    start charge_logger
     start vendor.power_off_alarm
 
     #Set the vbus_offset_mv to 1.04v
@@ -243,17 +239,6 @@ on property:vendor.display.lcd_density=160
 #
 #on property:persist.usb.chgdisabled=0
 #    write /sys/class/power_supply/battery/charging_enabled 1
-
-# add charge_logger service for dump charge message
-service charge_logger /vendor/bin/charge_logger
-   class last_start
-   user system
-   group system system wakelock
-   disabled
-   oneshot
-
-on property:sys.boot_completed=1
-    start charge_logger
 
 #qiaojinpeng @20191118 QR_code feature
 service nv_mac /vendor/bin/nv_mac
