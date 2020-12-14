@@ -1,3 +1,10 @@
+# Prebuilt
+system/lib64/libbluetooth_qti.so
+vendor/lib/hw/hwcomposer.atoll.so
+vendor/lib64/hw/hwcomposer.atoll.so
+vendor/lib/libsdmcore.so
+vendor/lib64/libsdmcore.so
+
 # DPM
 product/bin/dpmd
 product/etc/dpm/dpm.conf
