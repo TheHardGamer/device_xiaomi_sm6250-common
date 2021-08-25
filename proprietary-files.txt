@@ -935,6 +935,7 @@ vendor/lib/libgcs-ipc.so
 vendor/lib/libgcs-osal.so
 vendor/lib/libgcs.so
 vendor/lib/liblistensoundmodel2.so
+vendor/lib/libsmwrapper.so
 vendor/lib/libmulawdec.so
 vendor/lib64/hw/sound_trigger.primary.atoll.so
 vendor/lib64/libcapiv2svacnn.so
