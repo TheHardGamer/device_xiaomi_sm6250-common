@@ -69,6 +69,10 @@ on init
     write /sys/fs/cgroup/memory/bg/memory.move_charge_at_immigrate 1
     chown root system /sys/fs/cgroup/memory/bg/tasks
     chmod 0660 /sys/fs/cgroup/memory/bg/tasks
+    chown system system /sys/class/leds/white/brightness
+    chown system system /sys/class/leds/white/breath
+    chown system system /sys/class/leds/white/delay_on
+    chown system system /sys/class/leds/white/delay_off
 
 on post-fs
     chmod 0755 /sys/kernel/debug/tracing
