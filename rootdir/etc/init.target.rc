@@ -90,8 +90,6 @@ on post-fs-data
     mkdir /persist/qti_fp 0700 system system
     mkdir /data/vendor/nnhal 0700 system system
     mkdir /data/vendor/mac_addr 0771 system system
-#Creat charger log
-    mkdir /data/vendor/charge_logger 0771 system system
 
     mkdir /data/vendor/thermal 0771 root system
     mkdir /data/vendor/thermal/config 0771 root system
@@ -215,8 +213,6 @@ on charger
     chown system system /sys/class/leds/red/brightness
     chmod 0666 /sys/class/leds/red/brightness
     chmod 0666 /sys/class/backlight/panel0-backlight/brightness
-    mkdir /data/vendor/charge_logger 0771 system system
-    start charge_logger
     start vendor.power_off_alarm
 
 
@@ -500,17 +496,6 @@ on property:odm.pa-test=0
 
 on property:odm.pa-test=1
     start smart-pa-test
-
-# add charge_logger service for dump charge message
-service charge_logger /vendor/bin/charge_logger
-   class last_start
-   user system
-   group system system wakelock
-   disabled
-   oneshot
-
-on property:sys.boot_completed=1
-    start charge_logger
 
 service tinyhostless_loop /system/bin/tinyhostless -D 0 -P 30 -C 31 -p 256 -n 2 -c 1 -r 48000
     user root
