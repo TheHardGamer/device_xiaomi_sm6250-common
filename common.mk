@@ -127,6 +127,8 @@ PRODUCT_PACKAGES += \
     hwcomposer.atoll \
     libdisplayconfig.qti \
     libqdMetaData \
+    libqdMetaData.system \
+    libqdMetaData.vendor \
     libtinyxml \
     memtrack.atoll
 
@@ -412,7 +414,23 @@ PRODUCT_COPY_FILES += \
 
 # WiFi Display
 PRODUCT_PACKAGES += \
-    libnl
+    libnl \
+    libdisplayconfig \
+    libdisplayconfig.qti \
+    libdisplayconfig.vendor \
+    vendor.display.config@1.0.vendor \
+    vendor.display.config@1.1.vendor \
+    vendor.display.config@1.2.vendor \
+    vendor.display.config@1.3.vendor \
+    vendor.display.config@1.4.vendor \
+    vendor.display.config@1.5.vendor \
+    vendor.display.config@1.6.vendor \
+    vendor.display.config@1.7.vendor \
+    vendor.display.config@1.8.vendor \
+    vendor.display.config@1.9.vendor \
+    vendor.display.config@1.10.vendor \
+    vendor.display.config@1.11.vendor \
+    vendor.display.config@2.0
 
 PRODUCT_BOOT_JARS += \
     WfdCommon
